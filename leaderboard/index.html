@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MMR Leaderboard</title>
+<meta name="description" content="The top 20 projects by Monthly Made-up Revenue. Fictional projects, made-up numbers, new drama every day.">
+<style>
+  :root {
+    --bg: #07090f;
+    --panel: #10141f;
+    --line: #232a3a;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --green: #4ade80;
+    --yellow: #facc15;
+    --red: #ef4444;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  a { color: var(--green); }
+  .back { display: block; width: fit-content; margin-bottom: 20px; color: var(--muted); font-size: 15px; }
+  .eyebrow {
+    display: inline-block; margin: 0 0 12px; padding: 4px 10px; border-radius: 999px;
+    background: var(--yellow); color: #111; font-weight: 700; font-size: 13px; letter-spacing: .06em;
+  }
+  h1 { margin: 0 0 8px; font-size: clamp(30px, 5.5vw, 50px); line-height: 1.05; letter-spacing: -.02em; }
+  .lede { margin: 0 0 24px; max-width: 640px; color: var(--muted); font-size: 18px; }
+  .panel {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
+  }
+  .stamp {
+    position: absolute; pointer-events: none; z-index: 2;
+    padding: 4px 16px; border: 5px double var(--red); border-radius: 10px;
+    color: var(--red); font-weight: 900; letter-spacing: .04em; line-height: 1.1;
+    opacity: .85; transform: rotate(-11deg);
+  }
+  .strip {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px;
+    padding: 10px 20px; background: var(--yellow); color: #111; font-weight: 700; font-size: 14px;
+  }
+
+  .drama { margin: 0 0 20px; padding: 18px 20px 18px; }
+  .drama .tag { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--red); }
+  .drama p { margin: 4px 0 0; font-size: clamp(20px, 3.2vw, 28px); font-weight: 750; line-height: 1.25; }
+
+  .index { margin: 0 0 20px; }
+  .index .body { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 20px; align-items: center; padding: 20px; }
+  .index .label { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--muted); }
+  .index .value { display: block; font-size: clamp(36px, 6vw, 52px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+  .index .value small { font-size: 18px; color: var(--muted); font-weight: 700; margin-left: 4px; }
+  .index .change { font-weight: 700; }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+  .flat { color: var(--muted); }
+  .spark { position: relative; }
+  .spark svg { display: block; width: 100%; height: 110px; overflow: visible; }
+  .spark .tip {
+    position: absolute; top: -6px; transform: translate(-50%, -100%); white-space: nowrap; pointer-events: none;
+    padding: 4px 8px; border-radius: 8px; background: #0b0f19; border: 1px solid var(--line); font-size: 13px;
+  }
+  .spark .axis { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .index .stamp { bottom: 54px; right: 20px; font-size: 22px; }
+  .index .note { margin: 0; padding: 0 20px 16px; color: var(--muted); font-size: 14px; }
+
+  .board-head {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 16px 20px; border-bottom: 1px solid var(--line);
+  }
+  .board-head h2 { margin: 0; font-size: 20px; }
+  .board-head h2 span { color: var(--muted); font-weight: 600; }
+  .days { display: flex; gap: 8px; }
+  .days button {
+    padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg);
+    color: var(--text); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .days button:disabled { opacity: .4; cursor: default; }
+  .board .stamp { top: 84px; left: 40%; font-size: clamp(34px, 6vw, 60px); }
+
+  ol.rows { list-style: none; margin: 0; padding: 0; }
+  .row {
+    display: grid; grid-template-columns: 2.4em 4.2em minmax(0, 1fr) auto 5.5em; gap: 12px; align-items: center;
+    padding: 10px 20px; border-bottom: 1px solid rgba(255, 255, 255, .05);
+  }
+  .row.head { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; padding-top: 12px; padding-bottom: 8px; }
+  .rank { font-weight: 800; font-size: 18px; color: var(--muted); text-align: right; }
+  .row:nth-child(-n+4) .rank { color: var(--yellow); }
+  .move { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .move.new { color: var(--yellow); }
+  .who { min-width: 0; }
+  .who a { color: var(--text); font-weight: 650; text-decoration: none; overflow-wrap: anywhere; }
+  .who a:hover { color: var(--green); text-decoration: underline; }
+  .who .meta { display: block; color: var(--muted); font-size: 13px; }
+  .mmr { font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .mmr small { color: var(--muted); font-weight: 700; }
+  .pct { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+  .status { padding: 32px 20px; color: var(--muted); }
+  .status.error { color: #fca5a5; }
+
+  .fine { margin: 20px 0 0; color: var(--muted); font-size: 14px; max-width: 760px; }
+  .john { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); max-width: 680px; }
+  .john h2 { margin: 0 0 10px; font-size: 20px; }
+  .john p { margin: 0 0 12px; }
+
+  @media (max-width: 760px) {
+    main { padding-top: 20px; }
+    .index .body { grid-template-columns: minmax(0, 1fr); }
+    .row { grid-template-columns: 1.8em 3em minmax(0, 1fr) auto; gap: 10px; padding: 10px 14px; }
+    .pct { display: none; }
+    .board-head, .strip { padding-left: 14px; padding-right: 14px; }
+    .board .stamp { top: 150px; left: auto; right: 4%; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">&larr; Make your own MMR card</a>
+  <p class="eyebrow">MMR LEADERBOARD</p>
+  <h1>The top 20, ranked by revenue nobody has</h1>
+  <p class="lede">Twenty made-up projects. Their Monthly Made-up Revenue moves every day, and nobody checks. Tap a project to get its card.</p>
+
+  <section class="panel drama" aria-live="polite">
+    <span class="tag">TODAY'S DRAMA (MADE UP)</span>
+    <p id="headline">Making up today's numbers&hellip;</p>
+  </section>
+
+  <section class="panel index" aria-labelledby="index-label">
+    <span class="stamp" aria-hidden="true">MADE UP</span>
+    <div class="body">
+      <div>
+        <span class="label" id="index-label">THE MMR INDEX</span>
+        <span class="value"><span id="index-value">&hellip;</span><small>pts*</small></span>
+        <span class="change" id="index-change"></span>
+      </div>
+      <div class="spark" id="spark">
+        <svg id="spark-svg" viewBox="0 0 600 110" preserveAspectRatio="none" role="img" aria-label="MMR Index, last 30 days"></svg>
+        <div class="axis"><span id="spark-from"></span><span id="spark-to"></span></div>
+      </div>
+    </div>
+    <p class="note">One made-up number for the whole made-up economy. It's the top 20 added up and divided by 1,000, because that looked better.</p>
+    <div class="strip"><span>*Points of nothing. The MMR Index is made up.</span><span class="site"></span></div>
+  </section>
+
+  <section class="panel board" aria-labelledby="board-title">
+    <span class="stamp" aria-hidden="true">MADE UP</span>
+    <div class="board-head">
+      <h2 id="board-title">MMR 20 <span id="board-date"></span></h2>
+      <div class="days">
+        <button type="button" id="prev">&larr; Earlier</button>
+        <button type="button" id="next">Later &rarr;</button>
+      </div>
+    </div>
+    <ol class="rows" id="rows">
+      <li class="status">Loading the leaderboard&hellip;</li>
+    </ol>
+    <div class="strip"><span>*MMR = Monthly Made-up Revenue. Every project and number here is made up.</span><span class="site"></span></div>
+  </section>
+
+  <p class="fine">None of these projects exist. The numbers come from a seeded random walk that runs once a day, and every card is the same made-up number drawn as a chart. If a name here belongs to something real, that's a coincidence, and it'll get renamed.</p>
+
+  <footer class="john">
+    <h2>Why this exists</h2>
+    <p>A bot makes up this leaderboard every morning. It opens a pull request with the day's drama in the title and merges it, so the repo ships something every day whether I do or not.</p>
+    <p>Those merges go through <a href="https://merge.tel">merge.tel</a>, the thing I actually make. It turns merged pull requests into posts, so a fake leaderboard announces itself and I don't have to. That's most of the point of it.</p>
+  </footer>
+</main>
+
+<script src="../site.js"></script>
+<script>
+(() => {
+  const DATA = '../data/leaderboard/';
+  const SITE = window.MMR_SITE;
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const $ = (id) => document.getElementById(id);
+  const money = (n) => '$' + n.toLocaleString('en-US');
+  const pts = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const nice = (date) => { const [y, m, d] = date.split('-').map(Number); return `${MONTHS[m - 1]} ${d}, ${y}`; };
+  const short = (date) => { const [, m, d] = date.split('-').map(Number); return `${MONTHS[m - 1]} ${d}`; };
+  const signed = (v) => (v > 0 ? '+' : '') + v.toLocaleString('en-US') + '%';
+  const tone = (v) => (v == null || v === 0 ? 'flat' : v > 0 ? 'up' : 'down');
+
+  document.querySelectorAll('.strip .site').forEach((el) => { el.textContent = `MMR Leaderboard · ${SITE}`; });
+
+  async function getJSON(path) {
+    const res = await fetch(DATA + path, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`${path} answered ${res.status}`);
+    return res.json();
+  }
+
+  function cardLink(row) {
+    const p = new URLSearchParams({ s: String(row.card.s), d: String(row.card.d), c: row.card.c, n: row.name });
+    return '../#' + p.toString();
+  }
+
+  function moveCell(row) {
+    const el = document.createElement('span');
+    el.className = 'move';
+    if (row.prev_rank == null || row.prev_rank > 20) {
+      el.textContent = 'NEW';
+      el.classList.add('new');
+      el.title = row.prev_rank == null ? 'First day on the board' : `Up from #${row.prev_rank}`;
+    } else if (row.prev_rank === row.rank) {
+      el.textContent = '=';
+      el.classList.add('flat');
+      el.title = 'Same spot as yesterday';
+    } else {
+      const by = row.prev_rank - row.rank;
+      el.textContent = (by > 0 ? '▲' : '▼') + Math.abs(by);
+      el.classList.add(by > 0 ? 'up' : 'down');
+      el.title = `${by > 0 ? 'Up' : 'Down'} ${Math.abs(by)} from #${row.prev_rank}`;
+    }
+    return el;
+  }
+
+  function cell(cls, text) {
+    const el = document.createElement('span');
+    el.className = cls;
+    if (text != null) el.textContent = text;
+    return el;
+  }
+
+  function renderRows(day) {
+    const list = $('rows');
+    list.replaceChildren();
+    const head = document.createElement('li');
+    head.className = 'row head';
+    head.setAttribute('aria-hidden', 'true');
+    ['#', 'MOVE', 'PROJECT', 'MMR*', '24H'].forEach((t, i) => {
+      const el = cell(i === 3 ? 'mmr' : i === 4 ? 'pct' : i === 0 ? 'rank' : '', t);
+      head.append(el);
+    });
+    list.append(head);
+
+    for (const row of day.top) {
+      const li = document.createElement('li');
+      li.className = 'row';
+      const who = cell('who');
+      const a = document.createElement('a');
+      a.href = cardLink(row);
+      a.textContent = row.name;
+      a.title = `Open the ${row.name} card (made up)`;
+      const meta = cell('meta', row.pivoted_from ? `pivoted from ${row.pivoted_from} today` : `verified by ${row.verified}`);
+      who.append(a, meta);
+      const mmr = cell('mmr', money(row.mmr));
+      const star = document.createElement('small');
+      star.textContent = '*';
+      mmr.append(star);
+      const pct = cell('pct ' + tone(row.change_pct), row.change_pct == null ? '' : signed(row.change_pct));
+      li.append(cell('rank', String(row.rank)), moveCell(row), who, mmr, pct);
+      list.append(li);
+    }
+  }
+
+  function renderSpark(days, current) {
+    const svg = $('spark-svg');
+    const series = days.slice(-30);
+    const W = 600, H = 110, PAD = 8;
+    const vals = series.map((d) => d.index);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    const x = (i) => (series.length === 1 ? W / 2 : (i / (series.length - 1)) * W);
+    const y = (v) => (hi === lo ? H / 2 : PAD + (1 - (v - lo) / (hi - lo)) * (H - PAD * 2));
+    const coords = series.map((d, i) => `${x(i).toFixed(1)},${y(d.index).toFixed(1)}`);
+    const NS = 'http://www.w3.org/2000/svg';
+    const make = (tag, attrs) => {
+      const el = document.createElementNS(NS, tag);
+      Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+      return el;
+    };
+    svg.replaceChildren(
+      make('path', { d: `M${x(0)},${H} L${coords.join(' L')} L${x(series.length - 1)},${H} Z`, fill: 'rgba(74,222,128,0.12)' }),
+      make('polyline', { points: coords.join(' '), fill: 'none', stroke: '#4ade80', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }),
+    );
+    const at = series.findIndex((d) => d.date === current);
+    const guide = make('line', { y1: 0, y2: H, stroke: 'rgba(255,255,255,0.35)', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke', visibility: 'hidden' });
+    svg.append(guide);
+    if (at >= 0) {
+      guide.setAttribute('x1', x(at)); guide.setAttribute('x2', x(at));
+      guide.setAttribute('visibility', 'visible');
+    }
+    $('spark-from').textContent = short(series[0].date);
+    $('spark-to').textContent = short(series[series.length - 1].date);
+    svg.setAttribute('aria-label', `MMR Index (made up), ${short(series[0].date)} to ${short(series[series.length - 1].date)}: low ${pts(lo)}, high ${pts(hi)}.`);
+
+    // Hover: a crosshair and the day's reading.
+    const wrap = $('spark');
+    let tip = wrap.querySelector('.tip');
+    if (!tip) { tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true; wrap.append(tip); }
+    wrap.onpointermove = (e) => {
+      const box = svg.getBoundingClientRect();
+      const i = Math.round(((e.clientX - box.left) / box.width) * (series.length - 1));
+      const d = series[Math.max(0, Math.min(series.length - 1, i))];
+      const px = (x(series.indexOf(d)) / W) * box.width;
+      guide.setAttribute('x1', x(series.indexOf(d))); guide.setAttribute('x2', x(series.indexOf(d)));
+      guide.setAttribute('visibility', 'visible');
+      tip.hidden = false;
+      tip.textContent = `${short(d.date)}: ${pts(d.index)} pts (made up)`;
+      tip.style.left = Math.max(60, Math.min(box.width - 60, px)) + 'px';
+    };
+    wrap.onpointerleave = () => {
+      tip.hidden = true;
+      if (at >= 0) { guide.setAttribute('x1', x(at)); guide.setAttribute('x2', x(at)); } else guide.setAttribute('visibility', 'hidden');
+    };
+  }
+
+  let manifest = null;
+
+  async function show(date) {
+    const dates = manifest.days.map((d) => d.date);
+    if (!dates.includes(date)) date = dates[dates.length - 1];
+    const i = dates.indexOf(date);
+    $('prev').disabled = i <= 0;
+    $('next').disabled = i >= dates.length - 1;
+    $('prev').onclick = () => { location.hash = dates[i - 1]; };
+    $('next').onclick = () => { location.hash = dates[i + 1]; };
+    $('board-date').textContent = nice(date);
+
+    let day;
+    try {
+      day = await getJSON(date + '.json');
+    } catch (err) {
+      $('rows').replaceChildren(Object.assign(document.createElement('li'), {
+        className: 'status error',
+        textContent: `The leaderboard for ${nice(date)} didn't load (${err.message}). The numbers were made up anyway, but they should still show up.`,
+      }));
+      throw err;
+    }
+    $('headline').textContent = day.headline;
+    $('index-value').textContent = pts(day.index.value);
+    const ch = $('index-change');
+    ch.className = 'change ' + tone(day.index.change_pct);
+    ch.textContent = day.index.change_pct == null ? 'first day of trading' : day.index.change_pct === 0 ? 'flat on the day, somehow' : `${day.index.change_pct > 0 ? '▲' : '▼'} ${signed(day.index.change_pct)} on the day`;
+    renderSpark(manifest.days.slice(Math.max(0, i - 29), i + 1), date);
+    renderRows(day);
+    document.title = `MMR Leaderboard for ${short(date)}: ${day.headline}`;
+  }
+
+  async function start() {
+    try {
+      manifest = await getJSON('days.json');
+    } catch (err) {
+      $('headline').textContent = "The leaderboard didn't load.";
+      $('rows').replaceChildren(Object.assign(document.createElement('li'), {
+        className: 'status error',
+        textContent: `Couldn't fetch the list of days (${err.message}). If you opened this file straight from disk, serve the folder instead: python3 -m http.server`,
+      }));
+      throw err;
+    }
+    await show(location.hash.slice(1));
+    window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+  }
+
+  start();
+})();
+</script>
+</body>
+</html>
