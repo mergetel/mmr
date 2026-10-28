@@ -1,7 +1,7 @@
 name: Daily leaderboard
 
 # Makes up the day's leaderboard, opens a PR with the day's drama as its
-# title, and merges it.
+# title, merges it, and publishes the site.
 on:
   schedule:
     - cron: '23 7 * * *'
@@ -23,6 +23,8 @@ concurrency:
 jobs:
   leaderboard:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.gen.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
 
@@ -63,7 +65,15 @@ jobs:
           fi
           echo "Opened $url"
 
-          # --auto needs "Allow auto-merge" on and something to wait for.
-          # Without either, merge it straight away.
-          gh pr merge "$url" --squash --delete-branch --auto \
-            || gh pr merge "$url" --squash --delete-branch
+          # Merged now rather than with --auto, so the Pages job below
+          # always publishes a main that already has the day.
+          gh pr merge "$url" --squash --delete-branch
+
+  pages:
+    needs: leaderboard
+    if: needs.leaderboard.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/pages.yml

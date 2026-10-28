@@ -1,0 +1,38 @@
+name: Pages
+
+# Publishes the repo root to GitHub Pages as it is. There's no build step.
+# A push to main deploys. The daily leaderboard workflow calls this too,
+# because a merge it makes with its own token can't start a push workflow.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      # main, not the commit that started the run: when the daily workflow
+      # calls this, the day it just merged is only on main.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -28,7 +28,7 @@ They check that every committed row opens a card with the same number, using the
 
 ## How it stays alive
 
-`.github/workflows/daily-leaderboard.yml` runs every day at 07:23 UTC. It runs `scripts/generate.mjs`, which writes `data/leaderboard/YYYY-MM-DD.json` and appends the day to `data/leaderboard/days.json`. Then it runs the tests, opens a PR titled like "Leaderboard for Oct 29: Dashboard of Dashboards on a tear" and merges it. If a run gets missed, the next one catches up every missing day in one PR. You can also start it by hand from the Actions tab, with an optional date.
+`.github/workflows/daily-leaderboard.yml` runs every day at 07:23 UTC. It runs `scripts/generate.mjs`, which writes `data/leaderboard/YYYY-MM-DD.json` and appends the day to `data/leaderboard/days.json`. Then it runs the tests, opens a PR titled like "Leaderboard for Oct 29: Dashboard of Dashboards on a tear", merges it and publishes the site. If a run gets missed, the next one catches up every missing day in one PR. You can also start it by hand from the Actions tab, with an optional date.
 
 Each day is seeded from its date and the day before it, so the same history always produces the same tomorrow. The generator picks a card seed for each project so the card draws that project's exact figure, then uses the card's figure as the row's.
 
@@ -43,7 +43,9 @@ The project list, the drama lines and the pivot rules are in `scripts/lib.mjs`. 
 Two repo settings need to be on for the workflow to work:
 
 1. Settings, Actions, General, Workflow permissions: "Allow GitHub Actions to create and approve pull requests". Without it, `gh pr create` fails with a 403.
-2. Optionally, Settings, General: "Allow auto-merge". The workflow tries `--auto` first and merges straight away if auto-merge is off or there's nothing to wait for.
+2. Settings, Pages, Build and deployment, Source: "GitHub Actions". Without it, the publish step fails and the day stays merged but unpublished until the next deploy.
+
+The bot merges its PR straight away rather than with auto-merge, so the publish step always sees the new day on `main`.
 
 Don't make a status check required on `main`. A PR opened with the workflow's token can't start other workflows, so a required check would never report and the PR would sit there. The daily workflow runs the tests itself before it opens the PR.
 
@@ -51,11 +53,13 @@ Don't make a status check required on `main`. A PR opened with the workflow's to
 
 ## Deploying
 
-Create a Netlify site from this repo. `netlify.toml` sets no build command and `.` as the publish directory, so there's nothing to configure. Every daily merge redeploys the site with the new day. Data files get a five minute cache.
+The site is on GitHub Pages, at https://mergetel.github.io/mmr/ until it has a domain. `.github/workflows/pages.yml` uploads the repo root as it is, with no build. It runs on every push to `main` and whenever the daily workflow merges a day. The daily workflow has to call it itself, because a merge made with the workflow's own token can't start a push workflow. To redeploy by hand, run "Pages" from the Actions tab.
+
+Every link and fetch in the pages is relative, so the site works under `/mmr/` and at the root of a custom domain alike.
 
 ## Setting the domain
 
-The domain lives in one place, `window.MMR_SITE` in `site.js`. Both pages print it in their footer strips, and the generator draws it onto every PNG. Change it there once the domain is bought, then add the domain to the Netlify site.
+The domain lives in one place, `window.MMR_SITE` in `site.js`. Both pages print it in their footer strips, and the generator draws it onto every PNG. Change it there once the domain is bought. Then add the domain under Settings, Pages, Custom domain, and point its DNS at GitHub Pages. With an Actions deploy, GitHub ignores a `CNAME` file, so the setting is the only place it goes.
 
 ## Rules
 
