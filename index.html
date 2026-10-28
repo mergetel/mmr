@@ -62,6 +62,13 @@
   .john { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); max-width: 680px; }
   .john p { margin: 0 0 12px; }
   a { color: var(--green); }
+  .ticker {
+    display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; margin: 0 0 24px; padding: 10px 16px;
+    border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--text); text-decoration: none;
+  }
+  .ticker b { color: var(--yellow); font-size: 13px; letter-spacing: .06em; }
+  .ticker .go { color: var(--green); font-weight: 600; }
+  .ticker:hover { border-color: var(--green); }
   @media (max-width: 760px) {
     main { padding-top: 24px; }
     .controls { grid-template-columns: 1fr; }
@@ -70,6 +77,11 @@
 </head>
 <body>
 <main>
+  <a class="ticker" href="leaderboard/">
+    <b>MMR LEADERBOARD</b>
+    <span id="ticker-text">Twenty made-up projects, new drama every day.</span>
+    <span class="go">See the top 20 &rarr;</span>
+  </a>
   <p class="eyebrow">MMR GENERATOR</p>
   <h1>Monthly Made-up <span>Recurring</span> Revenue</h1>
   <p class="lede">The revenue screenshot, minus the revenue. Pick how deluded you are, then post the chart like everybody else does.</p>
@@ -114,9 +126,10 @@
   </footer>
 </main>
 
+<script src="site.js"></script>
 <script>
 (() => {
-  const SITE = 'merge.tel';
+  const SITE = window.MMR_SITE;
   const W = 1200;
   const H = 675;
   const FONT = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "DejaVu Sans", sans-serif';
@@ -129,7 +142,7 @@
     { label: 'Series A (in my head)', min: 140000, max: 4800000, days: [2, 9] },
   ];
 
-  const NAMES = ['Invoicely', 'Shiply', 'AI Wrapper #7', 'Dashboardly', 'Tasklet', 'PromptPal', 'Directory of Directories'];
+  const NAMES = ['Invoice Thing v3', 'Todo App (Again)', 'AI Wrapper #7', 'Dashboard of Dashboards', 'Vibe Coded CRM', 'Prompt Library #12', 'Directory of Directories'];
 
   const STATS = [
     ['Customers', '3', 'two are my mom'],
@@ -497,6 +510,27 @@
   });
 
   render();
+})();
+</script>
+<script>
+// Today's leaderboard headline in the ticker. The ticker still links there if this fails.
+(async () => {
+  try {
+    const res = await fetch('data/leaderboard/days.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`days.json answered ${res.status}`);
+    const days = (await res.json()).days;
+    const today = days[days.length - 1];
+    const before = days[days.length - 2];
+    const pts = today.index.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let move = '';
+    if (before) {
+      const pct = Math.round(((today.index - before.index) / before.index) * 1000) / 10;
+      move = pct === 0 ? ', flat' : ` ${pct > 0 ? '▲' : '▼'}${Math.abs(pct)}%`;
+    }
+    document.getElementById('ticker-text').textContent = `MMR Index ${pts}${move}. ${today.headline}.`;
+  } catch (err) {
+    console.warn("The leaderboard ticker didn't load:", err);
+  }
 })();
 </script>
 </body>
