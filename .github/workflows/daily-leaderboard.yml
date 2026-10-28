@@ -1,0 +1,69 @@
+name: Daily leaderboard
+
+# Makes up the day's leaderboard, opens a PR with the day's drama as its
+# title, and merges it.
+on:
+  schedule:
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Day to make up, as YYYY-MM-DD (UTC). Empty means today.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daily-leaderboard
+  cancel-in-progress: false
+
+jobs:
+  leaderboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Make up the numbers
+        id: gen
+        env:
+          DAY: ${{ inputs.date }}
+        run: node scripts/generate.mjs ${DAY:+--date "$DAY"} --pr-body "$RUNNER_TEMP/body.md"
+
+      # A PR this workflow opens can't start other workflows, so the checks
+      # run here instead of on the PR.
+      - name: Check the made-up numbers
+        if: steps.gen.outputs.changed == 'true'
+        run: node --test
+
+      - name: Open the PR and merge it
+        if: steps.gen.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAY: ${{ steps.gen.outputs.date }}
+          TITLE: ${{ steps.gen.outputs.title }}
+        run: |
+          branch="leaderboard/$DAY"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add data
+          git commit -m "$TITLE"
+          git push --force origin "$branch"
+
+          url=$(gh pr view "$branch" --json url,state -q 'select(.state == "OPEN") | .url' 2>/dev/null || true)
+          if [ -z "$url" ]; then
+            url=$(gh pr create --head "$branch" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md")
+          fi
+          echo "Opened $url"
+
+          # --auto needs "Allow auto-merge" on and something to wait for.
+          # Without either, merge it straight away.
+          gh pr merge "$url" --squash --delete-branch --auto \
+            || gh pr merge "$url" --squash --delete-branch

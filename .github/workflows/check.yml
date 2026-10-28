@@ -1,0 +1,28 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test
+      # The generator runs against a throwaway copy, so it can't change the PR.
+      - name: Make up tomorrow, then throw it away
+        run: |
+          cp -r . "$RUNNER_TEMP/dry"
+          cd "$RUNNER_TEMP/dry"
+          last=$(ls data/leaderboard | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.json$' | sort | tail -1)
+          next=$(date -u -d "${last%.json} + 1 day" +%F)
+          node scripts/generate.mjs --date "$next"
+          node --test

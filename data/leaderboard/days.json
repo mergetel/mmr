@@ -1,0 +1,185 @@
+{
+  "made_up": true,
+  "days": [
+    {
+      "date": "2026-09-29",
+      "index": 7591.23,
+      "headline": "Quiet day. AI Wrapper #7 posts a thread about it anyway",
+      "leader": "AI Wrapper #7"
+    },
+    {
+      "date": "2026-09-30",
+      "index": 8048.13,
+      "headline": "Timer for Timers is the new #1, posts a 40 tweet thread about it",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-01",
+      "index": 7981.69,
+      "headline": "Fake Door Test enters the top 20 on the strength of one tweet",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-02",
+      "index": 6998.83,
+      "headline": "Calendar but Blue down 22%, landing page now says \"beta\"",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-03",
+      "index": 7561.79,
+      "headline": "Timer for Timers up 26%, founder starts a podcast",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-04",
+      "index": 7471.93,
+      "headline": "SEO Blog Robot pivots to SEO Blog Robot AI",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-05",
+      "index": 6992.37,
+      "headline": "Habit Tracker #41 pivots to Habit Tracker #42",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-06",
+      "index": 7202.27,
+      "headline": "Ramen Profitable Ramen down 35%, landing page now says \"beta\"",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-07",
+      "index": 9251.32,
+      "headline": "Agent That Agents climbs 4 spots after a thread with eleven emojis",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-08",
+      "index": 9348.68,
+      "headline": "AI Wrapper #7 pivots to AI Wrapper #8",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-09",
+      "index": 7684.31,
+      "headline": "Calendar but Blue down 57% after the founder takes a nap, calls it a reset",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-10",
+      "index": 8044.39,
+      "headline": "Uptime Monitor Monitor up 224% after changing the button to green",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-11",
+      "index": 8066.53,
+      "headline": "Dark Mode as a Service enters the top 20 on the strength of one tweet",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-12",
+      "index": 8767.6,
+      "headline": "Waitlist, No Product loses 58% overnight after mom cancels",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-13",
+      "index": 8573.36,
+      "headline": "Calendar but Blue sneaks into the top 20, screenshots it immediately",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-14",
+      "index": 8776.92,
+      "headline": "Boilerplate Boilerplate is the new #1, posts a 40 tweet thread about it",
+      "leader": "Boilerplate Boilerplate"
+    },
+    {
+      "date": "2026-10-15",
+      "index": 10301.39,
+      "headline": "Newsletter Newsletter climbs 9 spots after mom signs up again",
+      "leader": "Boilerplate Boilerplate"
+    },
+    {
+      "date": "2026-10-16",
+      "index": 11763.23,
+      "headline": "Dark Mode as a Service up 39%, founder starts a podcast",
+      "leader": "Boilerplate Boilerplate"
+    },
+    {
+      "date": "2026-10-17",
+      "index": 12331.15,
+      "headline": "Revenue Screenshot Maker up 27%, founder starts a podcast",
+      "leader": "Boilerplate Boilerplate"
+    },
+    {
+      "date": "2026-10-18",
+      "index": 13340.93,
+      "headline": "Timer for Timers is the new #1, posts a 40 tweet thread about it",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-19",
+      "index": 12378.28,
+      "headline": "Invoice Thing v3 pivots to Invoice Thing v3 AI",
+      "leader": "Timer for Timers"
+    },
+    {
+      "date": "2026-10-20",
+      "index": 11857.94,
+      "headline": "Yet Another Link Page hits #1, updates the bio before the landing page",
+      "leader": "Yet Another Link Page"
+    },
+    {
+      "date": "2026-10-21",
+      "index": 12213.1,
+      "headline": "SEO Blog Robot AI up 21%, founder posts the chart twice",
+      "leader": "Yet Another Link Page"
+    },
+    {
+      "date": "2026-10-22",
+      "index": 13139.61,
+      "headline": "Agent That Agents up 83%, founder starts a podcast",
+      "leader": "Yet Another Link Page"
+    },
+    {
+      "date": "2026-10-23",
+      "index": 13786.1,
+      "headline": "Calendar but Blue sneaks into the top 20, screenshots it immediately",
+      "leader": "Yet Another Link Page"
+    },
+    {
+      "date": "2026-10-24",
+      "index": 13048.91,
+      "headline": "Calendar but Blue falls out of the top 20, blames the algorithm",
+      "leader": "Yet Another Link Page"
+    },
+    {
+      "date": "2026-10-25",
+      "index": 21259.48,
+      "headline": "Uptime Monitor Monitor takes #1, says it's \"just getting started\"",
+      "leader": "Uptime Monitor Monitor"
+    },
+    {
+      "date": "2026-10-26",
+      "index": 20001.47,
+      "headline": "Timer for Timers pivots to Timer for Timers AI",
+      "leader": "Uptime Monitor Monitor"
+    },
+    {
+      "date": "2026-10-27",
+      "index": 18655.89,
+      "headline": "Calendar but Blue up 321% after posting the same chart twice",
+      "leader": "Uptime Monitor Monitor"
+    },
+    {
+      "date": "2026-10-28",
+      "index": 18657,
+      "headline": "Agent That Agents pivots to Agent That Agents AI",
+      "leader": "Uptime Monitor Monitor"
+    }
+  ]
+}
