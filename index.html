@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monthly Made-up Revenue</title>
+<meta name="description" content="The revenue screenshot, minus the revenue. Pick how deluded you are and post the chart. Stamped MADE UP, because it is.">
+<style>
+  :root {
+    --bg: #07090f;
+    --panel: #10141f;
+    --line: #232a3a;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --green: #4ade80;
+    --yellow: #facc15;
+    --red: #ef4444;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1240px; margin: 0 auto; padding: 40px 16px 64px; }
+  .eyebrow {
+    display: inline-block; margin: 0 0 12px; padding: 4px 10px; border-radius: 999px;
+    background: var(--yellow); color: #111; font-weight: 700; font-size: 13px; letter-spacing: .06em;
+  }
+  h1 { margin: 0 0 8px; font-size: clamp(32px, 6vw, 56px); line-height: 1.05; letter-spacing: -.02em; }
+  h1 span { color: var(--red); text-decoration: line-through; text-decoration-thickness: 4px; }
+  .lede { margin: 0 0 28px; max-width: 640px; color: var(--muted); font-size: 18px; }
+  .stage { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); }
+  canvas { display: block; width: 100%; height: auto; }
+  .controls {
+    display: grid; grid-template-columns: 1.2fr 1.4fr 1fr; gap: 16px; align-items: end;
+    margin: 20px 0 12px; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
+  }
+  label { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+  label b { color: var(--text); font-weight: 600; }
+  input[type=text], select {
+    width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text); font: inherit;
+  }
+  input[type=range] { width: 100%; accent-color: var(--green); }
+  .buttons { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px; }
+  button {
+    padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg);
+    color: var(--text); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  button.primary { background: var(--green); border-color: var(--green); color: #052e12; }
+  button:hover { filter: brightness(1.12); }
+  .thread { margin-top: 28px; }
+  .thread h2, .john h2 { margin: 0 0 10px; font-size: 20px; }
+  pre {
+    margin: 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
+    white-space: pre-wrap; word-break: break-word; font: 16px/1.5 ui-sans-serif, system-ui, sans-serif;
+  }
+  .fine { margin: 20px 0 0; color: var(--muted); font-size: 14px; max-width: 760px; }
+  .john { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); max-width: 680px; }
+  .john p { margin: 0 0 12px; }
+  a { color: var(--green); }
+  @media (max-width: 760px) {
+    main { padding-top: 24px; }
+    .controls { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">MMR GENERATOR</p>
+  <h1>Monthly Made-up <span>Recurring</span> Revenue</h1>
+  <p class="lede">The revenue screenshot, minus the revenue. Pick how deluded you are, then post the chart like everybody else does.</p>
+
+  <section class="stage">
+    <canvas id="card" width="1200" height="675" role="img" aria-label="A made-up revenue chart"></canvas>
+  </section>
+
+  <section class="controls" aria-label="Make up your numbers">
+    <label><b>Project name</b>
+      <input type="text" id="name" maxlength="24" autocomplete="off" spellcheck="false">
+    </label>
+    <label><b>Delusion: <span id="delusion-label"></span></b>
+      <input type="range" id="delusion" min="0" max="3" step="1">
+    </label>
+    <label><b>Chart</b>
+      <select id="chart">
+        <option value="hockey">Hockey stick</option>
+        <option value="wall">Straight up, no notes</option>
+        <option value="whale">One whale</option>
+        <option value="crayon">Drew it myself</option>
+      </select>
+    </label>
+    <div class="buttons">
+      <button class="primary" id="reroll" type="button">Make up new numbers</button>
+      <button id="download" type="button">Download PNG</button>
+      <button id="copy" type="button">Copy the thread opener</button>
+    </div>
+  </section>
+
+  <section class="thread">
+    <h2>Your thread opener</h2>
+    <pre id="tweet"></pre>
+  </section>
+
+  <p class="fine">Nothing on this page is revenue. The numbers come from a random number generator and a slider called Delusion. Crop the stamp off if you like. The axis still says $$$$.</p>
+
+  <footer class="john">
+    <h2>Why this exists</h2>
+    <p>I made this because there's a revenue chart going straight up every few scrolls, and I've never believed a single one. Mine would be a flat line for a while. I'm told that's normal.</p>
+    <p>What I actually use is <a href="https://merge.tel">merge.tel</a>. It turns my merged pull requests into posts about what changed, so I post the work instead of a number.</p>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const SITE = 'merge.tel';
+  const W = 1200;
+  const H = 675;
+  const FONT = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "DejaVu Sans", sans-serif';
+  const HAND = '"Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive, ' + FONT;
+
+  const LEVELS = [
+    { label: 'Humble brag', min: 9, max: 480, days: [180, 720] },
+    { label: 'Indie hacker', min: 1200, max: 9800, days: [40, 160] },
+    { label: 'Thread guy', min: 12000, max: 96000, days: [9, 45] },
+    { label: 'Series A (in my head)', min: 140000, max: 4800000, days: [2, 9] },
+  ];
+
+  const NAMES = ['Invoicely', 'Shiply', 'AI Wrapper #7', 'Dashboardly', 'Tasklet', 'PromptPal', 'Directory of Directories'];
+
+  const STATS = [
+    ['Customers', '3', 'two are my mom'],
+    ['Churn', '0%', 'nobody logged in'],
+    ['Ad spend', '$0', 'just vibes'],
+    ['Team', '1', 'plus 14 agents'],
+    ['Runway', '∞', 'unemployable anyway'],
+    ['LTV : CAC', '∞ : 0', 'math checks out'],
+    ['Refunds', '1', 'also mom'],
+    ['Valuation', '$1B', 'in my head'],
+    ['Hours slept', '11', 'this week'],
+    ['Product', '62%', 'built'],
+    ['NPS', '100', 'n = 1'],
+    ['Profit', 'soon', 'any day now'],
+  ];
+
+  const NOTES = [
+    'posted a thread',
+    'added "AI" to the name',
+    'raised price to $9',
+    'mom subscribed',
+    'went viral (4 likes)',
+    'changed the font',
+    'a guy replied "nice"',
+    'bought a .ai domain',
+    'launched again',
+    'quit my job (again)',
+  ];
+
+  // Small seeded PRNG so a URL always rebuilds the same card.
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function shuffled(list, rnd) {
+    const out = list.slice();
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
+  const money = (n) => '$' + n.toLocaleString('en-US');
+  const cents = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function randomSeed() { return Math.floor(Math.random() * 4294967296) >>> 0; }
+
+  function readState() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    const seed = Number(p.get('s'));
+    const d = Number(p.get('d'));
+    const c = p.get('c');
+    return {
+      seed: Number.isFinite(seed) && p.has('s') ? seed >>> 0 : randomSeed(),
+      d: Number.isInteger(d) && d >= 0 && d <= 3 && p.has('d') ? d : 2,
+      c: ['hockey', 'wall', 'whale', 'crayon'].includes(c) ? c : 'hockey',
+      n: (p.get('n') || '').slice(0, 24),
+    };
+  }
+
+  function writeState(s) {
+    const p = new URLSearchParams({ s: String(s.seed), d: String(s.d), c: s.c, n: s.n });
+    history.replaceState(null, '', '#' + p.toString());
+  }
+
+  // Everything random is drawn here, in a fixed order, so changing the chart
+  // style or the name never changes the numbers.
+  function makeUp(s) {
+    const rnd = mulberry32(s.seed);
+    const lvl = LEVELS[s.d];
+    const amount = Math.round(lvl.min * Math.pow(lvl.max / lvl.min, rnd()));
+    const days = Math.round(lvl.days[0] + rnd() * (lvl.days[1] - lvl.days[0]));
+    // Last month is always pocket change, whatever this month says.
+    const last = Math.round((0.05 + rnd() * Math.min(39.95, amount * 0.004)) * 100) / 100;
+    const growth = Math.round((amount / last - 1) * 100);
+    const stats = shuffled(STATS, rnd).slice(0, 4);
+    const notes = shuffled(NOTES, rnd).slice(0, 3);
+    const tilt = -(7 + rnd() * 9);
+    const fallbackName = NAMES[Math.floor(rnd() * NAMES.length)];
+    return { amount, days, last, growth, stats, notes, tilt, name: s.n.trim() || fallbackName };
+  }
+
+  function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function curve(style, t) {
+    if (style === 'wall') return t < 0.9 ? 0.03 : 0.97;
+    if (style === 'whale') return t < 0.62 ? 0.04 + t * 0.02 : 0.9;
+    return 0.02 + 0.95 * (Math.exp(7 * t) - 1) / (Math.exp(7) - 1);
+  }
+
+  function draw(ctx, s, m) {
+    ctx.clearRect(0, 0, W, H);
+
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#0b1020');
+    bg.addColorStop(1, '#1b0f2e');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Header: name, the MMR pill, the day count.
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `700 30px ${FONT}`;
+    ctx.fillText(m.name, 56, 72);
+    const nameW = ctx.measureText(m.name).width;
+    ctx.font = `700 14px ${FONT}`;
+    const pill = 'MONTHLY MADE-UP REVENUE';
+    const pillW = ctx.measureText(pill).width + 24;
+    rr(ctx, 56 + nameW + 16, 50, pillW, 28, 14);
+    ctx.fillStyle = '#facc15';
+    ctx.fill();
+    ctx.fillStyle = '#111111';
+    ctx.fillText(pill, 56 + nameW + 28, 69);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#9ca3af';
+    ctx.font = `500 22px ${FONT}`;
+    ctx.fillText(`Day ${m.days}  ·  verified by me`, W - 56, 72);
+    ctx.textAlign = 'left';
+
+    // The number.
+    ctx.fillStyle = '#4ade80';
+    const big = money(m.amount);
+    // Shrink long numbers so "MMR*" ends before the stamp starts.
+    let size = 104;
+    ctx.font = `800 ${size}px ${FONT}`;
+    while (size > 64 && ctx.measureText(big).width > 560) {
+      size -= 4;
+      ctx.font = `800 ${size}px ${FONT}`;
+    }
+    ctx.fillText(big, 50, 186);
+    const bigW = ctx.measureText(big).width;
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = `700 34px ${FONT}`;
+    ctx.fillText('MMR*', 50 + bigW + 14, 186);
+
+    ctx.fillStyle = '#4ade80';
+    ctx.font = `600 24px ${FONT}`;
+    const up = `▲ +${m.growth.toLocaleString('en-US')}% vs last month`;
+    ctx.fillText(up, 56, 230);
+    const upW = ctx.measureText(up).width;
+    ctx.fillStyle = '#9ca3af';
+    ctx.font = `500 20px ${FONT}`;
+    ctx.fillText(`(last month was ${cents(m.last)})`, 56 + upW + 12, 230);
+
+    // Chart.
+    const x0 = 120, x1 = W - 56, y0 = 268, y1 = 476;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#6b7280';
+    ctx.font = `600 18px ${FONT}`;
+    ctx.textAlign = 'right';
+    ['$$$$', '$$$', '$$', '$'].forEach((label, i) => {
+      const y = y0 + (i / 3) * (y1 - y0);
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+      ctx.fillText(label, x0 - 14, y + 6);
+    });
+    ctx.textAlign = 'left';
+    ctx.font = `500 16px ${FONT}`;
+    ctx.fillText('launch', x0, y1 + 24);
+    ctx.textAlign = 'center';
+    ctx.fillText(`day ${Math.max(1, Math.round(m.days / 2))}`, (x0 + x1) / 2, y1 + 24);
+    ctx.textAlign = 'right';
+    ctx.fillText('today', x1, y1 + 24);
+    ctx.textAlign = 'left';
+
+    const px = (t) => x0 + t * (x1 - x0);
+    const py = (v) => y1 - v * (y1 - y0);
+    const steps = 160;
+    const pts = [];
+    const jitter = mulberry32((s.seed ^ 0x9e3779b9) >>> 0);
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      let x = px(t), y = py(curve(s.c, t));
+      if (s.c === 'crayon') { x += (jitter() - 0.5) * 6; y += (jitter() - 0.5) * 10; }
+      pts.push([x, y]);
+    }
+    if (s.c === 'wall' || s.c === 'whale') {
+      // A real vertical edge, not a steep slope.
+      const tJump = s.c === 'wall' ? 0.9 : 0.62;
+      const i = Math.round(tJump * steps);
+      pts.splice(i, 0, [px(tJump), py(curve(s.c, tJump - 0.001))]);
+    }
+
+    const area = ctx.createLinearGradient(0, y0, 0, y1);
+    area.addColorStop(0, 'rgba(74,222,128,0.35)');
+    area.addColorStop(1, 'rgba(74,222,128,0)');
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], y1);
+    pts.forEach(([x, y]) => ctx.lineTo(x, y));
+    ctx.lineTo(pts[pts.length - 1][0], y1);
+    ctx.closePath();
+    ctx.fillStyle = s.c === 'crayon' ? 'rgba(250,204,21,0.12)' : area;
+    ctx.fill();
+
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = s.c === 'crayon' ? '#facc15' : '#4ade80';
+    ctx.lineWidth = s.c === 'crayon' ? 9 : 5;
+    ctx.stroke();
+
+    if (s.c === 'crayon') {
+      ctx.fillStyle = '#facc15';
+      ctx.font = `700 26px ${HAND}`;
+      ctx.fillText('drew this myself, looks right', px(0.36), py(0.62));
+    }
+
+    // Annotations along the line.
+    const marks = [
+      [0.22, m.notes[0]],
+      [0.5, m.notes[1]],
+      s.c === 'whale' ? [0.62, 'one guy bought lifetime'] : s.c === 'wall' ? [0.9, 'added AI'] : [0.84, m.notes[2]],
+    ];
+    ctx.font = `600 17px ${FONT}`;
+    marks.forEach(([t, text]) => {
+      const x = px(t);
+      const y = py(curve(s.c, t > 0.6 && s.c !== 'hockey' && s.c !== 'crayon' ? t + 0.001 : t));
+      ctx.beginPath();
+      ctx.arc(x, y, 7, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      const w = ctx.measureText(text).width + 20;
+      const bx = Math.min(Math.max(x - w / 2, x0), x1 - w);
+      // Above the dot when there is room, below it when the line is near the top.
+      const by = y - 48 < y0 - 6 ? y + 16 : y - 48;
+      rr(ctx, bx, by, w, 30, 8);
+      ctx.fillStyle = 'rgba(15,23,42,0.92)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.fillStyle = '#e5e7eb';
+      ctx.fillText(text, bx + 10, by + 21);
+    });
+
+    // Stat tiles.
+    const gap = 16, tx = 56, ty = 518, th = 96;
+    const tw = (W - 112 - gap * 3) / 4;
+    m.stats.forEach(([label, value, note], i) => {
+      const x = tx + i * (tw + gap);
+      rr(ctx, x, ty, tw, th, 14);
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx.fill();
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = `700 14px ${FONT}`;
+      ctx.fillText(label.toUpperCase(), x + 18, ty + 26);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `800 30px ${FONT}`;
+      ctx.fillText(value, x + 18, ty + 60);
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = `500 16px ${FONT}`;
+      ctx.fillText(note, x + 18, ty + 84);
+    });
+
+    // The stamp. It sits on top of everything, on purpose.
+    ctx.save();
+    ctx.translate(960, 172);
+    ctx.rotate((m.tilt * Math.PI) / 180);
+    ctx.font = `900 64px ${FONT}`;
+    const stamp = 'MADE UP';
+    const sw = ctx.measureText(stamp).width + 44;
+    ctx.globalAlpha = 0.88;
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 6;
+    rr(ctx, -sw / 2, -46, sw, 92, 10);
+    ctx.stroke();
+    ctx.lineWidth = 2;
+    rr(ctx, -sw / 2 + 9, -37, sw - 18, 74, 6);
+    ctx.stroke();
+    ctx.fillStyle = '#ef4444';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(stamp, 0, 3);
+    ctx.restore();
+
+    // Footer strip, also baked into the PNG.
+    ctx.fillStyle = '#facc15';
+    ctx.fillRect(0, H - 40, W, 40);
+    ctx.fillStyle = '#111111';
+    ctx.font = `700 17px ${FONT}`;
+    ctx.textBaseline = 'middle';
+    ctx.fillText('*MMR = Monthly Made-up Revenue. 100% made up. Not revenue. Not monthly.', 56, H - 20);
+    ctx.textAlign = 'right';
+    ctx.fillText(`MMR generator · ${SITE}`, W - 56, H - 20);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  function threadOpener(s, m) {
+    const amt = money(m.amount);
+    const tail = '\n\n(MMR is Monthly Made-up Revenue. I made it up.)';
+    if (s.d === 0) return `Small win today. ${m.name} crossed ${amt} MMR after ${m.days} days.\n\nNot much, but it's mine. \u{1F64F}` + tail;
+    if (s.d === 1) return `${m.days} days ago I quit my job.\n\nToday ${m.name} hit ${amt} MMR.\n\nHere's everything I learned \u{1F9F5}` + tail;
+    if (s.d === 2) return `$0 → ${amt} MMR in ${m.days} days.\n\nNo funding.\nNo team.\nNo sleep.\n\nHere's exactly how I did it \u{1F447}` + tail;
+    return `${m.name} just crossed ${amt} MMR. Day ${m.days}.\n\nWe're hiring. It's just me. Still hiring.\n\nA thread on building a unicorn alone \u{1F984}\u{1F9F5}` + tail;
+  }
+
+  const canvas = document.getElementById('card');
+  const ctx = canvas.getContext('2d');
+  const nameEl = document.getElementById('name');
+  const dEl = document.getElementById('delusion');
+  const dLabel = document.getElementById('delusion-label');
+  const chartEl = document.getElementById('chart');
+  const tweetEl = document.getElementById('tweet');
+  const copyBtn = document.getElementById('copy');
+
+  let state = readState();
+  nameEl.value = state.n;
+  dEl.value = String(state.d);
+  chartEl.value = state.c;
+
+  function render() {
+    const m = makeUp(state);
+    nameEl.placeholder = m.name;
+    dLabel.textContent = LEVELS[state.d].label;
+    draw(ctx, state, m);
+    tweetEl.textContent = threadOpener(state, m);
+    canvas.setAttribute('aria-label',
+      `A made-up revenue card for ${m.name}: ${money(m.amount)} MMR on day ${m.days}, stamped MADE UP.`);
+    writeState(state);
+  }
+
+  nameEl.addEventListener('input', () => { state.n = nameEl.value.slice(0, 24); render(); });
+  dEl.addEventListener('input', () => { state.d = Number(dEl.value); render(); });
+  chartEl.addEventListener('change', () => { state.c = chartEl.value; render(); });
+  document.getElementById('reroll').addEventListener('click', () => { state.seed = randomSeed(); render(); });
+
+  document.getElementById('download').addEventListener('click', () => {
+    const slug = makeUp(state).name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'mmr';
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `mmr-${slug}.png`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }, 'image/png');
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    const before = copyBtn.textContent;
+    try {
+      await navigator.clipboard.writeText(tweetEl.textContent);
+      copyBtn.textContent = 'Copied';
+    } catch (_err) {
+      copyBtn.textContent = "Couldn't copy, select it by hand";
+    }
+    setTimeout(() => { copyBtn.textContent = before; }, 1800);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
