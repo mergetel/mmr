@@ -61,7 +61,7 @@ The domain lives in one place, `window.MMR_SITE` in `site.js`. Both pages print 
 
 ## Rules
 
-- **Obviously fake, and the image says so.** Anything people can download or screenshot carries the tell inside the image itself. The card bakes in its stamp and strip. The leaderboard and the index each have a MADE UP stamp and a yellow strip inside the panel, so a cropped screenshot still says it.
+- **Obviously fake, and the image says so.** Anything people can download or screenshot carries the tell inside the image itself. The card bakes in its stamp and strip. The leaderboard and the index each have a yellow strip inside the panel saying it's made up, so a cropped screenshot still says it.
 - **Mock the genre, never a name.** Every project is fictional, and the names are jokes rather than plausible brands. If one turns out to belong to something real, find and replace it across `data/` and `scripts/lib.mjs`. A consistent replace keeps the history replaying, because card seeds hang off the project id, not the name.
 - **No email capture.** A "join 38,000 founders" box can be a gag, but it saves nothing.
 - **Two voices.** The parody copy is overdone growth-thread voice on purpose. The "Why this exists" footers are John speaking in the first person, and they point at merge.tel.

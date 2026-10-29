@@ -37,12 +37,6 @@
     position: relative; overflow: hidden;
     border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
   }
-  .stamp {
-    position: absolute; pointer-events: none; z-index: 2;
-    padding: 4px 16px; border: 5px double var(--red); border-radius: 10px;
-    color: var(--red); font-weight: 900; letter-spacing: .04em; line-height: 1.1;
-    opacity: .85; transform: rotate(-11deg);
-  }
   .strip {
     display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px;
     padding: 10px 20px; background: var(--yellow); color: #111; font-weight: 700; font-size: 14px;
@@ -68,7 +62,6 @@
     padding: 4px 8px; border-radius: 8px; background: #0b0f19; border: 1px solid var(--line); font-size: 13px;
   }
   .spark .axis { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; margin-top: 4px; }
-  .index .stamp { bottom: 54px; right: 20px; font-size: 22px; }
   .index .note { margin: 0; padding: 0 20px 16px; color: var(--muted); font-size: 14px; }
 
   .board-head {
@@ -83,7 +76,6 @@
     color: var(--text); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
   }
   .days button:disabled { opacity: .4; cursor: default; }
-  .board .stamp { top: 84px; left: 40%; font-size: clamp(34px, 6vw, 60px); }
 
   ol.rows { list-style: none; margin: 0; padding: 0; }
   .row {
@@ -116,7 +108,6 @@
     .row { grid-template-columns: 1.8em 3em minmax(0, 1fr) auto; gap: 10px; padding: 10px 14px; }
     .pct { display: none; }
     .board-head, .strip { padding-left: 14px; padding-right: 14px; }
-    .board .stamp { top: 150px; left: auto; right: 4%; }
   }
 </style>
 </head>
@@ -133,7 +124,6 @@
   </section>
 
   <section class="panel index" aria-labelledby="index-label">
-    <span class="stamp" aria-hidden="true">MADE UP</span>
     <div class="body">
       <div>
         <span class="label" id="index-label">THE MMR INDEX</span>
@@ -150,7 +140,6 @@
   </section>
 
   <section class="panel board" aria-labelledby="board-title">
-    <span class="stamp" aria-hidden="true">MADE UP</span>
     <div class="board-head">
       <h2 id="board-title">MMR 20 <span id="board-date"></span></h2>
       <div class="days">
