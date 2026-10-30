@@ -1,0 +1,518 @@
+{
+  "date": "2026-10-30",
+  "made_up": "Every project, number and headline in this file is made up. None of it is revenue.",
+  "headline": "Ramen Profitable Ramen sneaks into the top 20, screenshots it immediately",
+  "title": "Ramen Profitable Ramen crashes the party",
+  "index": {
+    "value": 17999.31,
+    "change_pct": -13.5
+  },
+  "top": [
+    {
+      "rank": 1,
+      "prev_rank": 1,
+      "id": "uptime-monitor",
+      "name": "Uptime Monitor Monitor",
+      "mmr": 4799254,
+      "change_pct": 0.1,
+      "verified": "me",
+      "card": {
+        "s": 2958498306,
+        "d": 3,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 2,
+      "prev_rank": 3,
+      "id": "linkpage",
+      "name": "Yet Another Link Page",
+      "mmr": 3361851,
+      "change_pct": -12.1,
+      "verified": "a spreadsheet",
+      "card": {
+        "s": 640763996,
+        "d": 3,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 3,
+      "prev_rank": 2,
+      "id": "screenshot-maker",
+      "name": "Revenue Screenshot Maker",
+      "mmr": 3295763,
+      "change_pct": -19.8,
+      "verified": "the founder",
+      "card": {
+        "s": 2847260853,
+        "d": 3,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 4,
+      "prev_rank": 4,
+      "id": "boilerplate",
+      "name": "Boilerplate Boilerplate",
+      "mmr": 2442671,
+      "change_pct": -29.7,
+      "verified": "nobody",
+      "card": {
+        "s": 2558700151,
+        "d": 3,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 5,
+      "prev_rank": 5,
+      "id": "timer-timer",
+      "name": "Timer for Timers AI",
+      "mmr": 1132405,
+      "change_pct": -29.9,
+      "verified": "my mom",
+      "card": {
+        "s": 2589016396,
+        "d": 3,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 6,
+      "prev_rank": 6,
+      "id": "ai-wrapper",
+      "name": "AI Wrapper #8",
+      "mmr": 1092982,
+      "change_pct": -5.1,
+      "verified": "a screenshot",
+      "card": {
+        "s": 3027642757,
+        "d": 3,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 7,
+      "prev_rank": 7,
+      "id": "crm-for-one",
+      "name": "CRM for One",
+      "mmr": 727623,
+      "change_pct": 8.8,
+      "verified": "my mom",
+      "card": {
+        "s": 177895328,
+        "d": 3,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 8,
+      "prev_rank": 8,
+      "id": "agent-agents",
+      "name": "Agent That Agents AI",
+      "mmr": 326650,
+      "change_pct": -3.3,
+      "verified": "a spreadsheet",
+      "card": {
+        "s": 2792731480,
+        "d": 3,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 9,
+      "prev_rank": 9,
+      "id": "dashboards",
+      "name": "Dashboard of Dashboards",
+      "mmr": 251183,
+      "change_pct": 0.5,
+      "verified": "the founder",
+      "card": {
+        "s": 3411069523,
+        "d": 3,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 10,
+      "prev_rank": 10,
+      "id": "deck-gen",
+      "name": "Deck Generator Generator",
+      "mmr": 202814,
+      "change_pct": -13.9,
+      "verified": "my alt",
+      "card": {
+        "s": 1525758184,
+        "d": 3,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 11,
+      "prev_rank": 11,
+      "id": "landing-deluxe",
+      "name": "Landing Page Deluxe",
+      "mmr": 95984,
+      "change_pct": 2.4,
+      "verified": "my mom",
+      "card": {
+        "s": 1535338790,
+        "d": 2,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 12,
+      "prev_rank": 12,
+      "id": "name-picker",
+      "name": "Startup Name Picker",
+      "mmr": 86202,
+      "change_pct": -3.7,
+      "verified": "the founder",
+      "card": {
+        "s": 2766806013,
+        "d": 2,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 13,
+      "prev_rank": 13,
+      "id": "domain-2am",
+      "name": "Domain I Bought at 2am",
+      "mmr": 66386,
+      "change_pct": 13.6,
+      "verified": "my alt",
+      "card": {
+        "s": 576638629,
+        "d": 2,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 14,
+      "prev_rank": 14,
+      "id": "blue-calendar",
+      "name": "Calendar but Blue",
+      "mmr": 30756,
+      "change_pct": 45.8,
+      "verified": "trust me",
+      "card": {
+        "s": 64200896,
+        "d": 2,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 15,
+      "prev_rank": 15,
+      "id": "seo-robot",
+      "name": "SEO Blog Robot AI",
+      "mmr": 20689,
+      "change_pct": 10,
+      "verified": "a spreadsheet",
+      "card": {
+        "s": 2889633793,
+        "d": 2,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 16,
+      "prev_rank": 16,
+      "id": "spreadsheet-ai",
+      "name": "Spreadsheet, But AI",
+      "mmr": 15174,
+      "change_pct": -1.5,
+      "verified": "a screenshot",
+      "card": {
+        "s": 1041286698,
+        "d": 2,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 17,
+      "prev_rank": 18,
+      "id": "dark-mode",
+      "name": "Dark Mode as a Service",
+      "mmr": 15010,
+      "change_pct": 12.1,
+      "verified": "my mom",
+      "card": {
+        "s": 1965108273,
+        "d": 2,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 18,
+      "prev_rank": 17,
+      "id": "vibe-crm",
+      "name": "Vibe Coded CRM",
+      "mmr": 13825,
+      "change_pct": -3.8,
+      "verified": "me",
+      "card": {
+        "s": 3745680863,
+        "d": 2,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 19,
+      "prev_rank": 19,
+      "id": "invoice-thing",
+      "name": "Invoice Thing v3 AI",
+      "mmr": 13030,
+      "change_pct": -2.1,
+      "verified": "a screenshot",
+      "card": {
+        "s": 3148827742,
+        "d": 2,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 20,
+      "prev_rank": 21,
+      "id": "ramen",
+      "name": "Ramen Profitable Ramen",
+      "mmr": 9061,
+      "change_pct": 53.2,
+      "verified": "my mom",
+      "card": {
+        "s": 1912511819,
+        "d": 1,
+        "c": "hockey"
+      }
+    }
+  ],
+  "bench": [
+    {
+      "rank": 21,
+      "prev_rank": 20,
+      "id": "wrapper-wrapper",
+      "name": "Wrapper Wrapper",
+      "mmr": 8906,
+      "change_pct": -9,
+      "verified": "trust me",
+      "card": {
+        "s": 907964214,
+        "d": 1,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 22,
+      "prev_rank": 22,
+      "id": "newsletter",
+      "name": "Newsletter Newsletter",
+      "mmr": 5567,
+      "change_pct": 2.8,
+      "verified": "nobody",
+      "card": {
+        "s": 1785681794,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 23,
+      "prev_rank": 23,
+      "id": "habit-tracker",
+      "name": "Habit Tracker #42",
+      "mmr": 4677,
+      "change_pct": -8.4,
+      "verified": "the founder",
+      "card": {
+        "s": 1489172074,
+        "d": 1,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 24,
+      "prev_rank": 26,
+      "id": "pivot-before-last",
+      "name": "The Pivot Before Last",
+      "mmr": 2721,
+      "change_pct": 13.3,
+      "verified": "a screenshot",
+      "card": {
+        "s": 2642452081,
+        "d": 1,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 25,
+      "prev_rank": 25,
+      "id": "weekend-hack",
+      "name": "Weekend Hack, Day 400",
+      "mmr": 2497,
+      "change_pct": -2.5,
+      "verified": "a spreadsheet",
+      "card": {
+        "s": 3973601848,
+        "d": 1,
+        "c": "hockey"
+      }
+    },
+    {
+      "rank": 26,
+      "prev_rank": 28,
+      "id": "directories",
+      "name": "Directory of Directories",
+      "mmr": 2362,
+      "change_pct": 16.8,
+      "verified": "my mom",
+      "card": {
+        "s": 4246479427,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 27,
+      "prev_rank": 27,
+      "id": "todo-again",
+      "name": "Todo App (Again)",
+      "mmr": 2199,
+      "change_pct": 5.1,
+      "verified": "a screenshot",
+      "card": {
+        "s": 3521630752,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 28,
+      "prev_rank": 30,
+      "id": "moms-favorite",
+      "name": "Mom's Favorite SaaS",
+      "mmr": 2139,
+      "change_pct": 25.6,
+      "verified": "vibes",
+      "card": {
+        "s": 1596083,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 29,
+      "prev_rank": 29,
+      "id": "fake-door",
+      "name": "Fake Door Test",
+      "mmr": 1947,
+      "change_pct": -3.2,
+      "verified": "vibes",
+      "card": {
+        "s": 2336252860,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 30,
+      "prev_rank": 24,
+      "id": "waitlist",
+      "name": "Waitlist, No Product",
+      "mmr": 1757,
+      "change_pct": -35.6,
+      "verified": "my mom",
+      "card": {
+        "s": 2385323420,
+        "d": 1,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 31,
+      "prev_rank": 32,
+      "id": "prompt-library",
+      "name": "Prompt Library #12",
+      "mmr": 1637,
+      "change_pct": 17.5,
+      "verified": "vibes",
+      "card": {
+        "s": 1163047869,
+        "d": 1,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 32,
+      "prev_rank": 31,
+      "id": "pomodoro",
+      "name": "Pomodoro but Angrier",
+      "mmr": 1431,
+      "change_pct": -4.7,
+      "verified": "nobody",
+      "card": {
+        "s": 1557551686,
+        "d": 1,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 33,
+      "prev_rank": 33,
+      "id": "courses",
+      "name": "Course About Courses",
+      "mmr": 1201,
+      "change_pct": -4,
+      "verified": "a spreadsheet",
+      "card": {
+        "s": 2483471813,
+        "d": 1,
+        "c": "wall"
+      }
+    },
+    {
+      "rank": 34,
+      "prev_rank": 35,
+      "id": "side-project",
+      "name": "Side Project #14",
+      "mmr": 392,
+      "change_pct": 17,
+      "verified": "my mom",
+      "card": {
+        "s": 1671071240,
+        "d": 0,
+        "c": "whale"
+      }
+    },
+    {
+      "rank": 35,
+      "prev_rank": 34,
+      "id": "feedback-widget",
+      "name": "Unused Feedback Widget",
+      "mmr": 301,
+      "change_pct": -22.2,
+      "verified": "nobody",
+      "card": {
+        "s": 3624817559,
+        "d": 0,
+        "c": "crayon"
+      }
+    },
+    {
+      "rank": 36,
+      "prev_rank": 36,
+      "id": "email-reheater",
+      "name": "Cold Email Reheater",
+      "mmr": 277,
+      "change_pct": -8.6,
+      "verified": "nobody",
+      "card": {
+        "s": 1633922441,
+        "d": 0,
+        "c": "wall"
+      }
+    }
+  ]
+}
