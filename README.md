@@ -59,6 +59,14 @@ Every link and fetch in the pages is relative, so the site works under `/mmr/` a
 
 The domain lives in one place, `window.MMR_SITE` in `site.js`. Both pages print it in their footer strips, and the generator draws it onto every PNG. Change it there once the domain is bought. Then add the domain under Settings, Pages, Custom domain, and point its DNS at GitHub Pages. GitHub commits a `CNAME` file to `main` when you save it there.
 
+## The footer
+
+Every page ends with a "Who made this" block. It says who John is in a few lines and links to [johnf.build](https://johnf.build), [merge.tel](https://merge.tel) and [Screenery](https://screenery.dev), so anyone who lands on a joke site can find the real projects. The same block is on all four mergetel satire sites: [bfpi](https://github.com/mergetel/bfpi), [mmr](https://github.com/mergetel/mmr), [stinkslot](https://github.com/mergetel/stinkslot) and [gtmgen](https://github.com/mergetel/gtmgen). Each repo keeps its own copy, so no site depends on another one being up.
+
+The markup is in `index.html` and `leaderboard/index.html`. The CSS is in the `<style>` block of each of those two pages. Both sit between `whois:start` and `whois:end` comments. The block sets no colours of its own. It picks up the site's `--line` and `--muted` variables and its link colour, so it matches whichever palette it lands in.
+
+To change it, edit the block in all four repos and keep it identical, one PR per repo. The "Why this exists" text and the parody line above it belong to each site and don't change with it.
+
 ## Rules
 
 - **Obviously fake, and the image says so.** Anything people can download or screenshot carries the tell inside the image itself. The card bakes in its stamp and strip. The leaderboard and the index each have a yellow strip inside the panel saying it's made up, so a cropped screenshot still says it.
