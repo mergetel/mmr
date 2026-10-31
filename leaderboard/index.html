@@ -101,6 +101,15 @@
   .john { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); max-width: 680px; }
   .john h2 { margin: 0 0 10px; font-size: 20px; }
   .john p { margin: 0 0 12px; }
+  /* whois:start. The same block is on every mergetel satire site. Colours come from the site's own variables. */
+  .whois { margin: 12px 0 0; padding: 24px 0 40px; border-top: 1px solid var(--line, rgba(127, 127, 127, .3)); max-width: 680px; }
+  .whois h2 { margin: 0 0 8px; font-size: 18px; line-height: 1.3; letter-spacing: 0; }
+  .whois p { margin: 0 0 14px; }
+  .whois ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .whois li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; }
+  .whois li a { min-width: 7em; font-weight: 600; }
+  .whois li span { color: var(--muted, inherit); font-size: 14px; }
+  /* whois:end */
 
   @media (max-width: 760px) {
     main { padding-top: 20px; }
@@ -160,6 +169,18 @@
     <p>A bot makes up this leaderboard every morning. It opens a pull request with the day's drama in the title and merges it, so the repo ships something every day whether I do or not.</p>
     <p>Those merges go through <a href="https://merge.tel">merge.tel</a>, the thing I actually make. It turns merged pull requests into posts, so a fake leaderboard announces itself and I don't have to. That's most of the point of it.</p>
   </footer>
+
+  <!-- whois:start. The same block is on every mergetel satire site. See "The footer" in the README. -->
+  <section class="whois" aria-labelledby="whois-h">
+    <h2 id="whois-h">Who made this</h2>
+    <p>I'm John. I make software on my own, with more AI agents helping than is probably healthy. I did the enterprise job for twenty years and I'm unemployable now, so the real stuff below has to work.</p>
+    <ul>
+      <li><a href="https://johnf.build">johnf.build</a><span>what I'm building and how it's going</span></li>
+      <li><a href="https://merge.tel">merge.tel</a><span>turns merged pull requests into customer updates</span></li>
+      <li><a href="https://screenery.dev">Screenery</a><span>screenshots that update themselves on every release</span></li>
+    </ul>
+  </section>
+  <!-- whois:end -->
 </main>
 
 <script src="../site.js"></script>
